@@ -30,7 +30,7 @@ void getMovieListing(std::vector<std::string> &movies) {
 void getMovieInfo(const char * path, std::string &buf) {
 	std::string title = std::string(path).substr(1);
 	
-	buf += "title = " + title + "\n";
+	buf += "Title: " + title + "\n";
 	
 
 	mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
