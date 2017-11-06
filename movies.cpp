@@ -31,13 +31,18 @@ void addComment(std::string filename, std::string input) {
 	mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
 	mysqlpp::Query q = myDB.query();
 
-	q << "UPDATE movies SET comment = '" << input << "'";
-	q << "WHERE title = '" << filename << "'";
+	q << "SELECT comment FROM movies WHERE title = '" << filename << "'";
 	q.parse();
-
 	mysqlpp::StoreQueryResult result = q.store();
-	
+	std::string comment(result[0][0].c_str());
 
+	mysqlpp::Query q2 = myDB.query();
+	q2 << "UPDATE movies SET comment = '" << comment;
+	q2 << "\n" << input << "'";
+	q2 << "WHERE title = '" << filename << "'";
+	q2.parse();
+
+	q2.store();
 }
 
 

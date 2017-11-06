@@ -156,8 +156,9 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	
 	addComment(filename, input);
 	// Get the file information for this path
+	int dbSize = fmin(size,4096);
 	
-	return size ;
+	return dbSize;
 }
 
 //need to create dummy truncate to make writing happy
