@@ -27,6 +27,20 @@ void getMovieListing(std::vector<std::string> &movies) {
 	}
 }
 
+void addComment(std::string filename, std::string input) {
+	mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
+	mysqlpp::Query q = myDB.query();
+
+	q << "UPDATE movies SET comment = '" << input << "'";
+	q << "WHERE title = '" << filename << "'";
+	q.parse();
+
+	mysqlpp::StoreQueryResult result = q.store();
+	
+
+}
+
+
 void getMovieInfo(const char * path, std::string &buf) {
 	std::string title = std::string(path).substr(1);
 	
@@ -59,6 +73,36 @@ void getMovieInfo(const char * path, std::string &buf) {
 	std::string keywords(result[0][3].c_str());
 	if (keywords.length() > 0)
 		buf += "Keywords: " + keywords + "\n";
+	std::string original_language(result[0][4].c_str());
+	if (original_language.length() > 0) 
+		buf += "Original Language: " + original_language + "\n";
+	std::string original_title(result[0][5].c_str());
+	if (original_title.length() > 0)
+		buf += "Original Title: " + original_title + "\n";
+	std::string overview(result[0][6].c_str());
+	if (overview.length() > 0)
+		buf += "Overview: " + overview + "\n";
+	std::string popularity(result[0][7]);
+	if (popularity.length() > 0) 
+		buf += "Popularity: " + popularity + "\n";
+	std::string production_companies(result[0][8].c_str());
+	if (production_companies.length() > 0) 
+		buf += "Production Companies: " + production_companies + "\n";
+	std::string production_countries(result[0][9].c_str());
+	if (production_countries.length() > 0)
+		buf += "Production Countries: " + production_countries + "\n";
+	std::string release_date(result[0][10].c_str());
+	if (release_date.length() > 0) 
+		buf += "Release date: " + release_date + "\n";
+	std::string revenue(result[0][11]);
+	if (revenue.length() > 0)
+		buf += "Revenue: $" + revenue + "\n";
+	std::string runtime(result[0][12]);
+	if (runtime.length() > 0) 
+		buf += "Runtime: " + runtime + " min\n";
+	std::string comment(result[0][13].c_str());
+	if (comment.length() > 0)
+		buf += "Comment: " + comment + "\n";
 
 
 }

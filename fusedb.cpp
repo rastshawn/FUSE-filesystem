@@ -149,13 +149,15 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
-	(void) buf;
-	(void) size;
 	(void) offset;
-	(void) path;
+	
+	std::string input(buf);
+	std::string filename = std::string(path).substr(1);
+	
+	addComment(filename, input);
 	// Get the file information for this path
 	
-	return 0 ;
+	return size ;
 }
 
 //need to create dummy truncate to make writing happy

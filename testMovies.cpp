@@ -31,6 +31,18 @@ void getMovieInfo(const char * path, std::string &buf) {
 	buf += "title = " + std::string(path) + "\n";
 }
 
+void overwriteComment() {
+	mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
+	mysqlpp::Query q = myDB.query();
+
+	q << "UPDATE movies SET comment='rastsc' WHERE title='Zoom'";
+	q.parse();
+
+	mysqlpp::StoreQueryResult result = q.store();
+	
+}
+
+
 int main() {
 
 	std::vector<std::string> movies;
@@ -39,6 +51,8 @@ int main() {
 	for (size_t i=0; i<movies.size(); i++) {
 		std::cout << movies[i] << std::endl;
 	}
+
+	overwriteComment();
 
 /*
 	query.parse();
